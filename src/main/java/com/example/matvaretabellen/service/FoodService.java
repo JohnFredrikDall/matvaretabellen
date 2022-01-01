@@ -2,6 +2,7 @@ package com.example.matvaretabellen.service;
 
 import com.example.matvaretabellen.exception.FoodNotFoundException;
 import com.example.matvaretabellen.model.Food;
+import com.example.matvaretabellen.model.FoodList;
 import com.example.matvaretabellen.repo.FoodRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,18 @@ public class FoodService {
             return foodRepo.saveAll(foods);
         }
         catch (Exception e){
-            throw new Exception("Posting foodlist failed: ", e);
+            throw new Exception("Deleting food object failed: ", e);
         }
     }
+
+    /*public FoodList getFoodListFromJSON(FoodList foodlist) throws Exception {
+        try {
+            foodlist.getFoods().forEach(x -> x.setFoodCode(UUID.randomUUID().toString()));
+            foodRepo.saveAll(foodlist.getFoods());
+            return foodlist;
+        }
+        catch (Exception e) {
+            throw new Exception("Saving foodList from JSON failed: ", e);
+        }
+    }*/
 }

@@ -20,6 +20,7 @@ public class Food implements Serializable {
     @Size(min=1, max=50)
     private String name;
 
+    //TODO: Add annotations for exceptions on all fields
     private Double calories;
     private Double fat;
     private Double carbohydrates;
@@ -28,10 +29,15 @@ public class Food implements Serializable {
     @Column(nullable = false, updatable = false)
     private String foodCode;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "foodId", nullable = false)
+    private FoodList foodList;
+
+
     public Food() {
     }
 
-    public Food(Long id, String sortingCode, String name, Double calories, Double fat, Double carbohydrates, Double protein, Double percentageEdiblePart, String foodCode) {
+    public Food(Long id, String sortingCode, String name, Double calories, Double fat, Double carbohydrates, Double protein, Double percentageEdiblePart, String foodCode, FoodList foodList) {
         this.id = id;
         this.sortingCode = sortingCode;
         this.name = name;
@@ -41,6 +47,7 @@ public class Food implements Serializable {
         this.protein = protein;
         this.percentageEdiblePart = percentageEdiblePart;
         this.foodCode = foodCode;
+        this.foodList = foodList;
     }
 
     public Long getId() {
@@ -115,6 +122,14 @@ public class Food implements Serializable {
         this.foodCode = foodCode;
     }
 
+    public FoodList getFoodList() {
+        return foodList;
+    }
+
+    public void setFoodList(FoodList foodList) {
+        this.foodList = foodList;
+    }
+
     @Override
     public String toString() {
         return "Food{" +
@@ -127,6 +142,7 @@ public class Food implements Serializable {
                 ", protein=" + protein +
                 ", percentageEdiblePart=" + percentageEdiblePart +
                 ", foodCode='" + foodCode + '\'' +
+                ", foodList=" + foodList +
                 '}';
     }
 }

@@ -5,13 +5,21 @@ import java.io.Serializable;
 
 @Entity
 public class User implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Long id;
+
+    @Column(nullable = false, length = 64, unique = true)
     private String username;
+
+    @Column(nullable = false, length = 50, unique = true)
     private String email;
+
+    @Column(nullable = false, length = 64)
     private String password;
+
     @Column(nullable = false, updatable = false)
     private String userCode;
 
