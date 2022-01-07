@@ -1,10 +1,7 @@
 package com.example.matvaretabellen.model;
 
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -12,9 +9,8 @@ import java.io.Serializable;
 public class Food implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, insertable = false)
     private Long id;
-    private String sortingCode;
 
     @NotEmpty(message = "Food name cannot be empty!")
     @Size(min=1, max=50)
@@ -26,28 +22,24 @@ public class Food implements Serializable {
     private Double carbohydrates;
     private Double protein;
     private Double percentageEdiblePart;
-    @Column(nullable = false, updatable = false)
-    private String foodCode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "foodId", nullable = false)
-    private FoodList foodList;
+    @ManyToOne
+    @JoinColumn(name = "foodCategoryId")
+    private FoodCategory foodCategory;
 
 
     public Food() {
     }
 
-    public Food(Long id, String sortingCode, String name, Double calories, Double fat, Double carbohydrates, Double protein, Double percentageEdiblePart, String foodCode, FoodList foodList) {
+    public Food(Long id, String name, Double calories, Double fat, Double carbohydrates, Double protein, Double percentageEdiblePart, FoodCategory foodCategory) {
         this.id = id;
-        this.sortingCode = sortingCode;
         this.name = name;
         this.calories = calories;
         this.fat = fat;
         this.carbohydrates = carbohydrates;
         this.protein = protein;
         this.percentageEdiblePart = percentageEdiblePart;
-        this.foodCode = foodCode;
-        this.foodList = foodList;
+        this.foodCategory = foodCategory;
     }
 
     public Long getId() {
@@ -56,14 +48,6 @@ public class Food implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getSortingCode() {
-        return sortingCode;
-    }
-
-    public void setSortingCode(String sortingCode) {
-        this.sortingCode = sortingCode;
     }
 
     public String getName() {
@@ -114,35 +98,25 @@ public class Food implements Serializable {
         this.percentageEdiblePart = percentageEdiblePart;
     }
 
-    public String getFoodCode() {
-        return foodCode;
+    public FoodCategory getFoodCategory() {
+        return foodCategory;
     }
 
-    public void setFoodCode(String foodCode) {
-        this.foodCode = foodCode;
-    }
-
-    public FoodList getFoodList() {
-        return foodList;
-    }
-
-    public void setFoodList(FoodList foodList) {
-        this.foodList = foodList;
+    public void setFoodCategory(FoodCategory foodCategory) {
+        this.foodCategory = foodCategory;
     }
 
     @Override
     public String toString() {
         return "Food{" +
                 "id=" + id +
-                ", sortingCode='" + sortingCode + '\'' +
                 ", name='" + name + '\'' +
                 ", calories=" + calories +
                 ", fat=" + fat +
                 ", carbohydrates=" + carbohydrates +
                 ", protein=" + protein +
                 ", percentageEdiblePart=" + percentageEdiblePart +
-                ", foodCode='" + foodCode + '\'' +
-                ", foodList=" + foodList +
+                ", foodCategory=" + foodCategory +
                 '}';
     }
 }

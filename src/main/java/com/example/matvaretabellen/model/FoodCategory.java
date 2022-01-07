@@ -6,43 +6,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class FoodList implements Serializable {
+public class FoodCategory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
-    private Long Id;
-    private String categoryId;
+    private Long id;
     private String categoryName;
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
-            mappedBy = "foodList")
-    private List<Food> foods;
+            mappedBy = "foodCategory")
+    private List<Food> foods = new ArrayList<>();
 
-    public FoodList() {
+    public FoodCategory() {
     }
 
-    public FoodList(Long id, String categoryId, String categoryName) {
-        Id = id;
-        this.categoryId = categoryId;
+    public FoodCategory(String categoryName) {
         this.categoryName = categoryName;
-        this.foods = new ArrayList<>();
     }
 
-    public Long getId() {
-        return Id;
+
+    public Long getcId() {
+        return id;
     }
 
-    public void setId(Long id) {
-        Id = id;
-    }
-
-    public String getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+    public void setcId(Long cId) {
+        this.id = cId;
     }
 
     public String getCategoryName() {
@@ -61,11 +50,11 @@ public class FoodList implements Serializable {
         this.foods = foods;
     }
 
+
     @Override
     public String toString() {
-        return "FoodList{" +
-                "Id=" + Id +
-                ", categoryId='" + categoryId + '\'' +
+        return "FoodCategory{" +
+                "cId=" + id +
                 ", categoryName='" + categoryName + '\'' +
                 ", foods=" + foods +
                 '}';
