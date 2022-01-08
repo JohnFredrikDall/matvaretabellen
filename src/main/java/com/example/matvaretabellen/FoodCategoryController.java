@@ -46,7 +46,6 @@ public class FoodCategoryController {
             @Valid
             @RequestBody FoodCategory foodCategory) {
         try {
-            //foodCategory.getFoods().forEach(food -> food.setFoodCategory(foodCategory));
             FoodCategory newFoodCategory = foodCategoryService.addFoodCategory(foodCategory);
             return new ResponseEntity<>(
                     newFoodCategory,

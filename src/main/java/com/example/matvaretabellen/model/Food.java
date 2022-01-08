@@ -1,34 +1,36 @@
 package com.example.matvaretabellen.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Entity
 public class Food implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, updatable = false, insertable = false)
     private Long id;
+    private static final AtomicInteger counter = new AtomicInteger(0);
 
     @NotEmpty(message = "Food name cannot be empty!")
-    @Size(min=1, max=50)
     private String name;
 
-    //TODO: Add annotations for exceptions on all fields
     private Double calories;
     private Double fat;
     private Double carbohydrates;
     private Double protein;
     private Double percentageEdiblePart;
 
-    @ManyToOne
-    @JoinColumn(name = "foodCategoryId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "food_category_id")
+    @JsonBackReference
     private FoodCategory foodCategory;
 
-
     public Food() {
+        id = (long) counter.incrementAndGet();
     }
 
     public Food(Long id, String name, Double calories, Double fat, Double carbohydrates, Double protein, Double percentageEdiblePart, FoodCategory foodCategory) {
